@@ -43,3 +43,6 @@ DELETE http://localhost:3000/api/events/4
 
 ### Delete invalid event
 DELETE http://localhost:3000/api/events/999
+
+### Summary of all events
+GET http://localhost:3000/api/stats

@@ -4,7 +4,7 @@ const app = express();
 app.use(express.json());
 
 let events = [
-  {
+    {
     id: 1,
     title: 'Welcome party for Erasmus students',
     description: 'Meet the other exchange students, eat pizza and get your welcome pack.',
@@ -106,3 +106,24 @@ app.delete('/api/events/:id', (req, res) => {
 app.listen(3000, () => {
   console.log('API running on http://localhost:3000');
 });
+
+app.get('/api/stats', (req,res) => {
+  const totalCapacity = events.reduce((acc, event) => {
+    return acc + event.capacity}, 0);
+  const n = events.length;
+  //gets the next event in the future
+  const next = events.reduce((acc, event) => {
+    if(new Date(event.date) > new Date() && (acc == null ? true : acc.date > event.date)){
+      return event;
+    }
+      return acc;
+  }, null);
+
+  if(next != null){
+    const {location, capacity, description, ...nextEvent} = next;
+    res.json({n, totalCapacity, nextEvent});
+  }
+  else{
+    res.json({n, totalCapacity, next});
+  }
+})
