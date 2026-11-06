@@ -72,9 +72,16 @@ function toEvent(id, body) {
 
 app.get('/api/events', (req, res) => {
   const q = String(req.query.q ?? '').toLowerCase();
+  const from = String(req.query.from ?? '');
+  const from_date = new Date(from);
+  if(from !== '' && isNaN(from_date.getTime())){
+    return res.status(400).json({error: `Invalid Date: "${from} "is not a valid date format.`})
+  }
+  const sort = String(req.query.sort ?? '');
   const result = events
     .filter((e) => e.title.toLowerCase().includes(q))
-    .sort((a, b) => a.date.localeCompare(b.date));
+    .filter((e) => from === '' ? e : new Date(e.date) >= from_date)
+    .sort((a, b) => sort === ''? a.date.localeCompare(b.date): a.title.localeCompare(b.title));
   res.json(result);
 });
 
