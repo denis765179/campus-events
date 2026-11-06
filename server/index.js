@@ -32,14 +32,29 @@ let events = [
 let nextId = 4;
 
 function validateEvent(body) {
+  const errors = [];
   if (typeof body.title !== 'string' || body.title.trim().length < 3) {
-    return 'title must have at least 3 characters';
+    errors.push('title must have at least 3 characters');
   }
-  if (typeof body.date !== 'string' || Number.isNaN(Date.parse(body.date))) {
-    return 'date must be a valid date, e.g. 2026-10-15T18:00';
+  if (typeof body.date !== 'string' || Number.isNaN(Date.parse(body.date)) || new Date(body.date) < new Date() ) {
+    errors.push('date must be valid and in the future, e.g. 2026-10-15T18:00');
   }
   if (!Number.isInteger(body.capacity) || body.capacity < 1) {
-    return 'capacity must be a whole number greater than 0';
+    errors.push('capacity must be a whole number greater than 0');
+  }
+  if(body.title.length > 120){
+    errors.push("title can have at most 120 characters.");
+  }
+  if(Object.hasOwn(body, "location")){
+    if(body.location.length > 100){
+      errors.push("location can have at most 100 characters.");
+    }
+  }
+  if(Object.hasOwn(body, "description")){
+    if(body.description.length > 1000) errors.push("description can have at most 1000 characters.");
+  }
+  if(errors.length > 0){
+    return errors;
   }
   return null;
 }
@@ -103,10 +118,6 @@ app.delete('/api/events/:id', (req, res) => {
   res.status(204).end();
 });
 
-app.listen(3000, () => {
-  console.log('API running on http://localhost:3000');
-});
-
 app.get('/api/stats', (req,res) => {
   const totalCapacity = events.reduce((acc, event) => {
     return acc + event.capacity}, 0);
@@ -127,3 +138,6 @@ app.get('/api/stats', (req,res) => {
     res.json({n, totalCapacity, next});
   }
 })
+app.listen(3000, () => {
+  console.log('API running on http://localhost:3000');
+});
