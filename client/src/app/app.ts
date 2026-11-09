@@ -1,13 +1,11 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-
+import { EventList } from './event-list/event-list';
 @Component({
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, EventList],
   selector: 'app-root',
   styleUrl: './app.css',
   templateUrl: './app.html',
 })
 export class App {
-  protected readonly title = signal('Campus Events');
-  clicks = signal(0);
 }

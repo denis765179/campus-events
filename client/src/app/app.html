@@ -1,8 +1,7 @@
-<h1>{{title()}}</h1>
-<p>Our app is alive</p>
-<button (click)="clicks.set(clicks() + 1)">Clicked {{ clicks() }} times</button>
-<button (click) = "clicks.set(0)"> Reset counter</button>
-@if (clicks() > 5) {
-    <p>The Counter is above 5: {{clicks()}}</p>
-}
+<header>
+  <h1>Campus Events</h1>
+</header>
+<main>
+  <app-event-list />
+</main>
 <router-outlet/>
