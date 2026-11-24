@@ -7,14 +7,15 @@
 
 <p class="count">{{ visibleEvents().length }} of {{ events().length }} events</p>
 
-@if (lastInterest(); as title) {
-  <p class="note">You are interested in: {{ title }}</p>
-}
 
 <header class = "division"> Upcoming Events: </header>
 <div class="grid">
   @for (event of upcomingEvents(); track event.id) {
-    <app-event-card [event]="event" (interested)="onInterested($event)" />
+    <app-event-card 
+    [event]="event"
+    [favourite]="favourites().includes(event.id)"
+    (favouriteToggle)="toggleFavourite($event)"
+    />
   }@empty {
     <p>No upcoming events match your search.</p>
   }
@@ -24,6 +25,10 @@
 }
 <div class="grid">
   @for (event of pastEvents(); track event.id){
-     <app-event-card [event]="event" (interested)="onInterested($event)" />
+     <app-event-card 
+     [event]="event"
+     [favourite]="favourites().includes(event.id)"
+     (favouriteToggle)="toggleFavourite($event)"
+     />
   } 
 </div>

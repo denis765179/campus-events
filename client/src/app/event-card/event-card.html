@@ -5,5 +5,7 @@
   @if (event().description) {
     <p>{{ event().description }}</p>
   }
-  <button type="button" (click)="interested.emit(event())">I'm interested</button>
+  <button type="button" (click)="favouriteToggle.emit(event().id)"> 
+    {{ favourite() ? '★ Favourite' : '☆ Add to favourites' }}
+  </button>
 </article>

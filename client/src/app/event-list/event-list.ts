@@ -75,9 +75,13 @@ export class EventList {
     return this.visibleEvents().filter((e) => new Date(e.date) < new Date());
   });
 
-  lastInterest = signal<string | null>(null);
+  favourites = signal <number[]>([]);
 
-  onInterested(event: CampusEvent) {
-    this.lastInterest.set(event.title);
+  toggleFavourite(id: number){
+    this.favourites.update(list =>
+    list.includes(id)
+      ? list.filter(x => x !== id)
+      : [...list, id]
+  );
   }
 }

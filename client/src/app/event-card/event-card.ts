@@ -2,6 +2,7 @@
 import { Component, input, output } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { CampusEvent } from '../campus-event';
+import { NumberValueAccessor } from '@angular/forms';
 
 @Component({
   imports: [DatePipe],
@@ -11,5 +12,6 @@ import { CampusEvent } from '../campus-event';
 })
 export class EventCard {
   event = input.required<CampusEvent>();
-  interested = output<CampusEvent>();
+  favourite = input<boolean>(false);
+  favouriteToggle = output<number>();
 }
