@@ -34,6 +34,30 @@ export class EventList {
       location: 'Student club',
       capacity: 30,
     },
+    {
+      id: 4,
+      title: 'Movie night',
+      description: 'Watch movies or whatever',
+      date: '2026-12-22T15:00',
+      location: 'Campus movie theater',
+      capacity: 25
+    },
+    {
+      id: 5,
+      title: 'Cinammon roll baking',
+      description: 'Bake',
+      date: '2026-02-11T16:00',
+      location: 'Campus Kitchen (2nd floor)',
+      capacity: 50
+    },
+    {
+      id: 6,
+      title: 'GTA VI release',
+      description: 'Play the newly released GTA VI with your friends',
+      date: '2026-11-19T16:00',
+      location: 'Lab296',
+      capacity: 10
+    }
   ]);
 
   search = signal('');
@@ -41,6 +65,14 @@ export class EventList {
   visibleEvents = computed(() => {
     const q = this.search().toLowerCase();
     return this.events().filter((e) => e.title.toLowerCase().includes(q));
+  });
+
+  upcomingEvents = computed(() => {
+    return this.visibleEvents().filter((e) => new Date(e.date) >= new Date());
+  });
+
+  pastEvents = computed(() => {
+    return this.visibleEvents().filter((e) => new Date(e.date) < new Date());
   });
 
   lastInterest = signal<string | null>(null);

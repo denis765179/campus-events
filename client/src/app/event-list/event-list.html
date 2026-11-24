@@ -11,10 +11,19 @@
   <p class="note">You are interested in: {{ title }}</p>
 }
 
+<header class = "division"> Upcoming Events: </header>
 <div class="grid">
-  @for (event of visibleEvents(); track event.id) {
+  @for (event of upcomingEvents(); track event.id) {
     <app-event-card [event]="event" (interested)="onInterested($event)" />
-  } @empty {
-    <p>No events match your search.</p>
+  }@empty {
+    <p>No upcoming events match your search.</p>
   }
+</div>
+@if (pastEvents().length > 0){
+  <header class = "division"> Past Events: </header>
+}
+<div class="grid">
+  @for (event of pastEvents(); track event.id){
+     <app-event-card [event]="event" (interested)="onInterested($event)" />
+  } 
 </div>
