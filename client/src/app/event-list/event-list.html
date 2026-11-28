@@ -4,10 +4,9 @@
   [value]="search()"
   (input)="search.set($any($event.target).value)"
 />
-
 <p class="count">{{ visibleEvents().length }} of {{ events().length }} events</p>
-
-
+<P class = "count"> {{favourites().length}} {{favourites().length === 1? "favourite" : "favourites"}}</P>
+<!--Upcoming Events-->
 <header class = "division"> Upcoming Events: </header>
 <div class="grid">
   @for (event of upcomingEvents(); track event.id) {
@@ -20,6 +19,7 @@
     <p>No upcoming events match your search.</p>
   }
 </div>
+<!--Past Events-->
 @if (pastEvents().length > 0){
   <header class = "division"> Past Events: </header>
 }

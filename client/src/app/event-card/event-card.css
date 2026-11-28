@@ -4,6 +4,10 @@
   border-radius: 8px;
   background: white;
 }
+.favourite{
+  border: 1px solid #0008ff;
+  border-width: 2.5px;
+}
 .date {
   margin: 0;
   color: #0a4a96;
